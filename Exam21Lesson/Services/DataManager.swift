@@ -12,17 +12,17 @@ final class DataManager {
     private var model: [Model] = []
     private var currentIndex = 0
     
+    
     init(model: [Model]) {
-        //получаем массив данных
         self.model = model
     }
     
-    //Метод для получения текущего экземпляра модели
+    
     func getCurrentExample() -> Model {
         model[currentIndex]
     }
     
-    //Метод для переключения на следующий экземпляр
+    
     func getNextExample() -> Model {
         if currentIndex < model.count - 1 {
             currentIndex += 1
@@ -38,9 +38,9 @@ final class DataManager {
         return getCurrentExample()
     }
     
+    
     func getFirstExample() -> Model {
         currentIndex = 0
         return getCurrentExample()
     }
-    
 }
