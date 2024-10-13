@@ -7,7 +7,11 @@
 
 import UIKit
 
-struct Model {
+struct Model: CustomStringConvertible {
     let imageName: String
     let description: String
+    
+    var descriptionElement: String {
+        "ImageName: \(imageName), Description: \(description)"
+    }
 }
