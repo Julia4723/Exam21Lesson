@@ -11,13 +11,12 @@ final class ViewController: UIViewController {
     
     //MARK: - Private Property
     
-    private let contentManager = ContentManager()
-    private var dataManager: DataManager?
+    private var dataManager: DataManageable?
     
     
     private let lastButton = CustomButton(color: .systemBlue, label: "Last", labelColor: .white, isShadow: true)
     private let nextButton = CustomButton(color: .white, label: "Next", labelColor: .darkText, isShadow: true)
-    private let firstButton = CustomButton(color: .systemPink, label: "First", labelColor: .white, isShadow: false)
+    private let firstButton = CustomButton(color: .systemPink, label: "First", labelColor: .white)
     
     
     private let imageView = UIImageView()
@@ -26,13 +25,22 @@ final class ViewController: UIViewController {
     private let stackTop = UIStackView()
     
     
-   //MARK: - View Lifecycle
+    //MARK: - Init
+    
+    init(dataManager: DataManager) {
+        self.dataManager = dataManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    //MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let content = contentManager.getContent()
-        dataManager = DataManager(model: content)
         
         view.addViews(stackView, stackTop, firstButton, imageView, text)
         
@@ -54,24 +62,23 @@ final class ViewController: UIViewController {
     //MARK: - Private methods
     
     @objc private func nextButtonTapped() {
-        if let content = dataManager?.getNextExample() {
-            text.text = content.description
-            imageView.image = UIImage(named: content.imageName)
-        }
+        let content = dataManager?.getNextExample()
+        text.text = content?.description
+        imageView.image = UIImage(named: content?.imageName ?? "")
     }
     
     @objc private func lastButtonTapped() {
-        if let content = dataManager?.getLastExample() {
-            text.text = content.description
-            imageView.image = UIImage(named: content.imageName)
-        }
+        let content = dataManager?.getLastExample()
+        text.text = content?.description
+        imageView.image = UIImage(named: content?.imageName ?? "")
+        
     }
     
     @objc private func firstButtonTapped() {
-        if let content = dataManager?.getFirstExample() {
-            text.text = content.description
-            imageView.image = UIImage(named: content.imageName)
-        }
+        let content = dataManager?.getFirstExample()
+        text.text = content?.description
+        imageView.image = UIImage(named: content?.imageName ?? "")
+        
     }
 }
 
@@ -111,9 +118,9 @@ private extension ViewController {
 private extension ViewController {
     
     func setupImage() {
-        if let content = dataManager?.getCurrentExample() {
-            imageView.image = UIImage(named: content.imageName)
-        }
+        let content = dataManager?.getCurrentExample()
+        print(content)
+        imageView.image = UIImage(named: content?.imageName ?? "")
         
         imageView.tintColor = .black
         imageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
@@ -121,9 +128,8 @@ private extension ViewController {
     }
     
     func setupLabel() {
-        if let content = dataManager?.getCurrentExample() {
-            text.text = "\(content.description)"
-        }
+        let content = dataManager?.getCurrentExample()
+        text.text = "\(content?.description)"
         
         text.font = .systemFont(ofSize: 16)
         text.textAlignment = .center

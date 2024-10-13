@@ -10,7 +10,7 @@ import UIKit
 final class CustomButton: UIButton {
     
     
-    init(color: UIColor, label: String, labelColor: UIColor, isShadow: Bool) {
+    init(color: UIColor, label: String, labelColor: UIColor, isShadow: Bool = false) {
         super.init(frame: .zero)
         setupButton(color, label, labelColor, isShadow)
         

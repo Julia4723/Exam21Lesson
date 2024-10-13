@@ -7,7 +7,15 @@
 
 import UIKit
 
-final class DataManager {
+protocol DataManageable {
+    func getCurrentExample() -> Model
+    func getNextExample() -> Model
+    func getLastExample() -> Model
+    func getFirstExample() -> Model
+}
+
+final class DataManager: DataManageable {
+    
     
     private var model: [Model] = []
     private var currentIndex = 0
@@ -16,7 +24,7 @@ final class DataManager {
     init(model: [Model]) {
         self.model = model
     }
-    
+
     
     func getCurrentExample() -> Model {
         model[currentIndex]
