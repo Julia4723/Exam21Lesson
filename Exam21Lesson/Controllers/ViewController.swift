@@ -7,7 +7,8 @@
 
 import UIKit
 
-final class ViewController: UIViewController {
+final class ViewController: UIViewController, ICustomButtonDelegate {
+    
     
     //MARK: - Private Property
     
@@ -47,9 +48,15 @@ final class ViewController: UIViewController {
         setupImage()
         setupLabel()
         
+        nextButton.delegate = self
+        lastButton.delegate = self
+        firstButton.delegate = self
+        
+        
         addActionNextButton()
         addActionLastButton()
         addActionFirsButton()
+        
         setupButtonStackView()
         setupTopStack()
         
@@ -59,39 +66,36 @@ final class ViewController: UIViewController {
     }
         
     
-    
+
     //MARK: - Private methods
+   
     
     private func action(content: Model?) {
-        let content = content
         text.text = content?.description
         imageView.image = UIImage(named: content?.imageName ?? "")
     }
     
-    @objc private func nextButtonTapped() {
-        action(content: dataManager?.getNextExample())
-    }
-        
     
-    @objc private func lastButtonTapped() {
-        action(content: dataManager?.getLastExample())
-    }
-    
-    
-    @objc private func firstButtonTapped() {
-        action(content: dataManager?.getFirstExample())
+    func buttonTapped(_ button: UIButton) {
+        if button == nextButton {
+            action(content: dataManager?.getNextExample())
+        } else if button == lastButton {
+            action(content: dataManager?.getLastExample())
+        } else if button == firstButton {
+            action(content: dataManager?.getFirstExample())
+        }
     }
 }
     
     
     //MARK: - Action
     
-    private extension ViewController {
+extension ViewController {
         
         func addActionNextButton() {
             nextButton.addTarget(
                 self,
-                action: #selector(nextButtonTapped),
+                action: #selector(buttonTapped),
                 for: .touchUpInside
             )
         }
@@ -99,7 +103,7 @@ final class ViewController: UIViewController {
         func addActionLastButton() {
             lastButton.addTarget(
                 self,
-                action: #selector(lastButtonTapped),
+                action: #selector(buttonTapped),
                 for: .touchUpInside
             )
         }
@@ -107,7 +111,7 @@ final class ViewController: UIViewController {
         func addActionFirsButton() {
             firstButton.addTarget(
                 self,
-                action: #selector(firstButtonTapped),
+                action: #selector(buttonTapped),
                 for: .touchUpInside
             )
         }
@@ -120,7 +124,7 @@ final class ViewController: UIViewController {
         
         func setupImage() {
             let content = dataManager?.getCurrentExample()
-            print(content)
+            print(content ?? "")
             imageView.image = UIImage(named: content?.imageName ?? "")
             
             imageView.tintColor = .black
@@ -130,7 +134,7 @@ final class ViewController: UIViewController {
         
         func setupLabel() {
             let content = dataManager?.getCurrentExample()
-            text.text = "\(content?.description)"
+            text.text = "\(content?.description ?? "")"
             
             text.font = .systemFont(ofSize: 16)
             text.textAlignment = .center
