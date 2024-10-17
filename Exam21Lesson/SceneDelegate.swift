@@ -16,9 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let content = ContentManager().getContent()
         
-        let sortedElement = content.sorted { (lhs, rhs) in
-            lhs.imageName > rhs.imageName
-        }
+        let sortedElement = content.sorted(by: <)
         
         printElements(elements: sortedElement)
         
@@ -32,12 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
     }
     
-    private func printElements(elements: [Model]) {
-        for element in elements {
-            print(element.descriptionElement)
-        }
-    }
-    
+  
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
@@ -69,3 +62,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
 }
 
+
+extension SceneDelegate {
+    private func printElements(elements: [Model]) {
+        for element in elements {
+            print(element.descriptionElement)
+        }
+    }
+    
+}
