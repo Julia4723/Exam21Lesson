@@ -11,7 +11,10 @@ import UIKit
     func buttonTapped(_ button: UIButton)
 }
 
+
 final class CustomButton: UIButton {
+    
+    var nameElements: String?
     
     var delegate: ICustomButtonDelegate?
     
