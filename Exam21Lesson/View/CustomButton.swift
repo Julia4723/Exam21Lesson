@@ -44,7 +44,7 @@ final class CustomButton: UIButton {
 extension CustomButton {
     
     private func action() {
-        self.delegate?.buttonTapped(self)
+        delegate?.buttonTapped(self)
     }
     
     private func setupButton(_ color: UIColor, _ label: String, _ labelColor: UIColor,_ isShadow: Bool) {

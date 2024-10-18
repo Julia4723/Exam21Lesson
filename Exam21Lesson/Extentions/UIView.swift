@@ -12,6 +12,7 @@ extension UIView {
         view.forEach { addSubview($0)}
     }
     
+    
     func getCount(_ views: UIView...) -> Int {
         var count = 0
         for view in views {
@@ -21,6 +22,7 @@ extension UIView {
         }
         return count
     }
+    
     
     func printName(_ views: UIView...) {
         for view in views {
