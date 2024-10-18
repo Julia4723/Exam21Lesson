@@ -7,7 +7,16 @@
 
 import UIKit
 
+@objc protocol ICustomButtonDelegate {
+    func buttonTapped(_ button: UIButton)
+}
+
+
 final class CustomButton: UIButton {
+    
+    var nameElements: String?
+    
+    var delegate: ICustomButtonDelegate?
     
     
     init(color: UIColor, label: String, labelColor: UIColor, isShadow: Bool = false) {
@@ -33,6 +42,10 @@ final class CustomButton: UIButton {
 
 
 extension CustomButton {
+    
+    private func action() {
+        delegate?.buttonTapped(self)
+    }
     
     private func setupButton(_ color: UIColor, _ label: String, _ labelColor: UIColor,_ isShadow: Bool) {
         

@@ -7,7 +7,8 @@
 
 import UIKit
 
-final class ViewController: UIViewController {
+final class ViewController: UIViewController, ICustomButtonDelegate {
+    
     
     //MARK: - Private Property
     
@@ -47,9 +48,24 @@ final class ViewController: UIViewController {
         setupImage()
         setupLabel()
         
+        nextButton.delegate = self
+        lastButton.delegate = self
+        firstButton.delegate = self
+        
+        firstButton.nameElements = "FirstButton"
+        nextButton.nameElements = "NextButton"
+        lastButton.nameElements = "LastButton"
+        
+        
+        print(view.getCount(firstButton, nextButton, lastButton))
+        
+        view.printName(nextButton, firstButton, lastButton)
+        
+        
         addActionNextButton()
         addActionLastButton()
         addActionFirsButton()
+        
         setupButtonStackView()
         setupTopStack()
         
@@ -59,38 +75,35 @@ final class ViewController: UIViewController {
     }
     
     
+    
     //MARK: - Private methods
     
-    @objc private func nextButtonTapped() {
-        let content = dataManager?.getNextExample()
+    private func action(content: Model?) {
         text.text = content?.description
         imageView.image = UIImage(named: content?.imageName ?? "")
     }
     
-    @objc private func lastButtonTapped() {
-        let content = dataManager?.getLastExample()
-        text.text = content?.description
-        imageView.image = UIImage(named: content?.imageName ?? "")
-        
-    }
     
-    @objc private func firstButtonTapped() {
-        let content = dataManager?.getFirstExample()
-        text.text = content?.description
-        imageView.image = UIImage(named: content?.imageName ?? "")
-        
+    func buttonTapped(_ button: UIButton) {
+        if button == nextButton {
+            action(content: dataManager?.getNextExample())
+        } else if button == lastButton {
+            action(content: dataManager?.getLastExample())
+        } else if button == firstButton {
+            action(content: dataManager?.getFirstExample())
+        }
     }
 }
 
 
 //MARK: - Action
 
-private extension ViewController {
+extension ViewController {
     
     func addActionNextButton() {
         nextButton.addTarget(
             self,
-            action: #selector(nextButtonTapped),
+            action: #selector(buttonTapped),
             for: .touchUpInside
         )
     }
@@ -98,7 +111,7 @@ private extension ViewController {
     func addActionLastButton() {
         lastButton.addTarget(
             self,
-            action: #selector(lastButtonTapped),
+            action: #selector(buttonTapped),
             for: .touchUpInside
         )
     }
@@ -106,7 +119,7 @@ private extension ViewController {
     func addActionFirsButton() {
         firstButton.addTarget(
             self,
-            action: #selector(firstButtonTapped),
+            action: #selector(buttonTapped),
             for: .touchUpInside
         )
     }
@@ -119,7 +132,7 @@ private extension ViewController {
     
     func setupImage() {
         let content = dataManager?.getCurrentExample()
-        print(content)
+        print(content ?? "")
         imageView.image = UIImage(named: content?.imageName ?? "")
         
         imageView.tintColor = .black
@@ -129,7 +142,7 @@ private extension ViewController {
     
     func setupLabel() {
         let content = dataManager?.getCurrentExample()
-        text.text = "\(content?.description)"
+        text.text = "\(content?.description ?? "")"
         
         text.font = .systemFont(ofSize: 16)
         text.textAlignment = .center
