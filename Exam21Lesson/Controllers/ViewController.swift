@@ -77,17 +77,14 @@ final class ViewController: UIViewController, ICustomButtonDelegate {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
-        imageView.isUserInteractionEnabled = true
         
-        for touch in touches {
-            if (touch.view != nil) {
-                let current = dataManager?.getCurrentExample()
-                text.text = current?.imageName
-                print(current?.imageName ?? "")
-            }
-        }
+        super.touchesBegan(touches, with: event)
+        
+        let current = dataManager?.getCurrentExample()
+        text.text = current?.imageName
+        print(current?.imageName)
+        
     }
-    
     
     
     //MARK: - Private methods
@@ -145,6 +142,8 @@ extension ViewController {
 private extension ViewController {
     
     func setupImage() {
+        imageView.isUserInteractionEnabled = true
+        
         let content = dataManager?.getCurrentExample()
         print(content ?? "")
         imageView.image = UIImage(named: content?.imageName ?? "")

@@ -61,13 +61,6 @@ class FindImageViewController: UIViewController, ICustomButtonDelegate {
         let model = dataManager?.findExample(elementValue: inputText ?? "")
         imageName.text = model?.imageName
         imageView.image = UIImage(named: model?.imageName ?? "")
-        
-        
-        //        if imageName.text == model?.imageName {
-        //            titleLabel.text = "Такая картинка есть"
-        //        } else {
-        //            titleLabel.text = "Такой картинки нет"
-        //        }
     }
     
     
@@ -89,17 +82,22 @@ class FindImageViewController: UIViewController, ICustomButtonDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
-        imageView.isUserInteractionEnabled = true
+        super.touchesBegan(touches, with: event)
         
-        for touch in touches {
-            if (touch.view != nil) {
-                let inputText = textField.text ?? ""
-                let model = dataManager?.findExample(elementValue: inputText)
-                imageName.text = model?.imageName
-                imageView.image = UIImage(named: model?.imageName ?? "")
-                print(model?.imageName ?? "")
-            }
+        let inputText = textField.text ?? ""
+        let model = dataManager?.findExample(elementValue: inputText)
+        
+        if model?.imageName != nil {
+            titleLabel.text = "Такая картинка есть"
+            
+        } else {
+            titleLabel.text = "Такой картинки нет"
         }
+        
+        imageName.text = model?.imageName
+        imageView.image = UIImage(named: model?.imageName ?? "")
+        print(model?.imageName ?? "")
+        
     }
 }
 
@@ -148,6 +146,8 @@ extension FindImageViewController: UITextFieldDelegate {
 private extension FindImageViewController {
     
     func setupImageName() {
+        imageView.isUserInteractionEnabled = true
+        
         imageName.text = ""
         
         imageName.font = .systemFont(ofSize: 24)
