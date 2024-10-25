@@ -21,12 +21,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         printElements(elements: sortedElement)
         
         let dataManager = DataManager(model: content)
+        let findVC = FindImageViewController(dataManager: dataManager)
         
-        let viewController = ViewController(dataManager: dataManager)
+       // let viewController = ViewController(dataManager: dataManager)
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = viewController
+        window?.rootViewController = findVC
         window?.makeKeyAndVisible()
     }
     

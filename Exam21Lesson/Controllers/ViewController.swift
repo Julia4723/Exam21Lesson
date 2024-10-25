@@ -7,11 +7,6 @@
 
 import UIKit
 
-enum ControlEvent {
-    case touchUpInside
-    case touchUpOutside
-    case touchDown
-}
 
 final class ViewController: UIViewController, ICustomButtonDelegate {
     
@@ -84,12 +79,12 @@ final class ViewController: UIViewController, ICustomButtonDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         imageView.isUserInteractionEnabled = true
         
-        let touch: UITouch = touches.first!
-        
-        if (touch.view == imageView) {
-            let current = dataManager?.getCurrentExample()
-            text.text = current?.imageName
-            print(current?.imageName)
+        for touch in touches {
+            if (touch.view != nil) {
+                let current = dataManager?.getCurrentExample()
+                text.text = current?.imageName
+                print(current?.imageName ?? "")
+            }
         }
     }
     
