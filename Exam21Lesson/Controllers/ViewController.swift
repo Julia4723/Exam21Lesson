@@ -8,17 +8,30 @@
 import UIKit
 
 
-final class ViewController: UIViewController, ICustomButtonDelegate {
+final class ViewController: UIViewController {
     
     
     //MARK: - Private Property
     
     private var dataManager: DataManageable?
     
-    
-    private let lastButton = CustomButton(color: .systemBlue, label: "Last", labelColor: .white, isShadow: true)
-    private let nextButton = CustomButton(color: .white, label: "Next", labelColor: .darkText, isShadow: true)
-    private let firstButton = CustomButton(color: .systemPink, label: "First", labelColor: .white)
+    private let lastButton = CustomButton(
+        color: .systemBlue,
+        label: "Last",
+        labelColor: .white,
+        isShadow: true
+    )
+    private let nextButton = CustomButton(
+        color: .white,
+        label: "Next",
+        labelColor: .darkText,
+        isShadow: true
+    )
+    private let firstButton = CustomButton(
+        color: .systemPink,
+        label: "First",
+        labelColor: .white
+    )
     
     
     private let imageView = UIImageView()
@@ -44,14 +57,19 @@ final class ViewController: UIViewController, ICustomButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addViews(stackView, stackTop, firstButton, imageView, text)
+        view.addViews(
+            stackView,
+            stackTop,
+            firstButton,
+            imageView,
+            text
+        )
         
         setupImage()
         setupLabel()
         
-        nextButton.delegate = self
-        lastButton.delegate = self
-        firstButton.delegate = self
+        setupDelegate()
+        
         
         firstButton.nameElements = "FirstButton"
         nextButton.nameElements = "NextButton"
@@ -89,11 +107,22 @@ final class ViewController: UIViewController, ICustomButtonDelegate {
     
     //MARK: - Private methods
     
+    private func setupDelegate() {
+        nextButton.delegate = self
+        lastButton.delegate = self
+        firstButton.delegate = self
+    }
+    
     private func action(content: Model?) {
         text.text = content?.description
         imageView.image = UIImage(named: content?.imageName ?? "")
     }
     
+}
+
+
+//MARK: - ICustomButtonDelegate
+extension ViewController: ICustomButtonDelegate {
     
     func buttonTapped(_ button: UIButton) {
         if button == nextButton {
@@ -189,9 +218,9 @@ private extension ViewController {
 private extension ViewController {
     
     private func setupLayout() {
-        stackTop.translatesAutoresizingMaskIntoConstraints = false
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        firstButton.translatesAutoresizingMaskIntoConstraints = false
+        [stackTop, stackView, firstButton].forEach { view in
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
         
         NSLayoutConstraint.activate([
             

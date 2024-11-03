@@ -9,7 +9,7 @@ import UIKit
 
 
 
-class FindImageViewController: UIViewController, ICustomButtonDelegate {
+final class FindImageViewController: UIViewController {
     
     //MARK: - Private Property
     
@@ -17,12 +17,17 @@ class FindImageViewController: UIViewController, ICustomButtonDelegate {
     private let titleLabel = UILabel()
     private let textField = UITextField()
     private let validateMessage = UILabel()
-    private let buttonView = CustomButton(color: .blue, label: "Проверить", labelColor: .white)
+    private let buttonView = CustomButton(
+        color: .blue,
+        label: "Проверить",
+        labelColor: .white
+    )
     private let imageView = UIImageView()
     
     private var dataManager: DataManageable?
     
     //MARK: - Init
+    
     init(dataManager: DataManager) {
         self.dataManager = dataManager
         super.init(nibName: nil, bundle: nil)
@@ -34,11 +39,19 @@ class FindImageViewController: UIViewController, ICustomButtonDelegate {
     
     
     //MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        view.addViews(imageName, validateMessage, titleLabel, textField, buttonView, imageView)
+        view.addViews(
+            imageName,
+            validateMessage,
+            titleLabel,
+            textField,
+            buttonView,
+            imageView
+        )
         
         
         textField.delegate = self
@@ -64,15 +77,6 @@ class FindImageViewController: UIViewController, ICustomButtonDelegate {
     }
     
     
-    func buttonTapped(_ button: UIButton) {
-        if button == buttonView {
-            showText()
-            textField.endEditing(true)
-        } else {
-            print("Button pressed")
-        }
-    }
-    
     private func actionButton() {
         buttonView.addTarget(
             self,
@@ -80,6 +84,7 @@ class FindImageViewController: UIViewController, ICustomButtonDelegate {
             for: .touchUpInside
         )
     }
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         super.touchesBegan(touches, with: event)
@@ -98,6 +103,19 @@ class FindImageViewController: UIViewController, ICustomButtonDelegate {
         imageView.image = UIImage(named: model?.imageName ?? "")
         print(model?.imageName ?? "")
         
+    }
+}
+
+
+//MARK: - ICustomButtonDelegate
+extension FindImageViewController: ICustomButtonDelegate {
+    func buttonTapped(_ button: UIButton) {
+        if button == buttonView {
+            showText()
+            textField.endEditing(true)
+        } else {
+            print("Button pressed")
+        }
     }
 }
 

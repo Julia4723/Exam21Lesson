@@ -18,39 +18,27 @@ protocol DataManageable {
 
 final class DataManager: DataManageable {
     
-    func findExample(elementValue: String) -> Model? {
-        let array = content.getContent()
-        
-        for element in array {
-            if elementValue == element.imageName {
-                return element
-            }
-        }
-        return nil
-    }
+    //MARK: - Private Property
     
-    
-    
-    
-    private var model: [Model] = []
+    private var models: [Model] = []
     private var currentIndex = 0
     private var currentValue = ""
-    private var content = ContentManager()
     
     
     init(model: [Model]) {
-        self.model = model
+        self.models = model
     }
     
+    
+    //MARK: - Methods
     
     func getCurrentExample() -> Model {
-        model[currentIndex]
+        models[currentIndex]
     }
     
-  
     
     func getNextExample() -> Model {
-        if currentIndex < model.count - 1 {
+        if currentIndex < models.count - 1 {
             currentIndex += 1
         }
         return getCurrentExample()
@@ -58,7 +46,7 @@ final class DataManager: DataManageable {
     
     
     func getLastExample() -> Model {
-        if currentIndex < model.count && currentIndex != 0 {
+        if currentIndex < models.count && currentIndex != 0 {
             currentIndex -= 1
         }
         return getCurrentExample()
@@ -70,15 +58,14 @@ final class DataManager: DataManageable {
         return getCurrentExample()
     }
     
-   
     
-//    func findExample(elements: [Model]) -> Bool {
-////       let elements = content.getContent()
-//        if let firstIndex = elements.firstIndex(where: { $0.imageName == currentValue }) {
-//
-//            return true
-//        } else {
-//            return false
-//        }
-//    }
+    func findExample(elementValue: String) -> Model? {
+        
+        for element in models {
+            if elementValue == element.imageName {
+                return element
+            }
+        }
+        return nil
+    }
 }
