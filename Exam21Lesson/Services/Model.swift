@@ -7,15 +7,25 @@
 
 import UIKit
 
-struct Model: CustomStringConvertible, Comparable {
+struct Model {
     let imageName: String
     let description: String
     
+}
+
+
+//MARK: - CustomStringConvertible
+extension Model: CustomStringConvertible {
     var descriptionElement: String {
         "ImageName: \(imageName), Description: \(description)"
     }
-    
-    static func < (lhs: Model, rhs: Model) -> Bool {
-            return lhs.imageName < rhs.imageName
-        }
 }
+
+
+//MARK: - Comparable
+extension Model: Comparable {
+    static func < (lhs: Model, rhs: Model) -> Bool {
+        return lhs.imageName < rhs.imageName
+    }
+}
+
