@@ -15,22 +15,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         let content = ContentManager().getContent()
+        let textContent = TextManager().getTextContent()
         
         let sortedElement = content.sorted(by: <)
         
         printElements(elements: sortedElement)
         
-        let dataManager = DataManager(model: content)
+        let dataManager = DataManager(model: content, text: textContent)
         
-        let findVC = FindImageViewController(dataManager: dataManager)
+        //let findVC = FindImageViewController(dataManager: dataManager)
         
-        let panVC = PanImageViewController(dataManager: dataManager)
+        let licenseAgreementVC = LicenseAgreementViewController(dataManager: dataManager)
+        
+       // let panVC = PanImageViewController(dataManager: dataManager)
         
        // let viewController = ViewController(dataManager: dataManager)
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = panVC
+        window?.rootViewController = licenseAgreementVC
         window?.makeKeyAndVisible()
     }
     
