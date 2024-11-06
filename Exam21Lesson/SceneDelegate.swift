@@ -15,17 +15,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         let content = ContentManager().getContent()
-        let textContent = TextManager().getTextContent()
+        let textManager = TextManager()
         
         let sortedElement = content.sorted(by: <)
         
         printElements(elements: sortedElement)
         
-        let dataManager = DataManager(model: content, text: textContent)
+        let dataManager = DataManager(model: content)
         
         //let findVC = FindImageViewController(dataManager: dataManager)
-        
-        let licenseAgreementVC = LicenseAgreementViewController(dataManager: dataManager)
+       
+        let licenseAgreementVC = LicenseAgreementViewController(textManager: textManager)
+
         
        // let panVC = PanImageViewController(dataManager: dataManager)
         

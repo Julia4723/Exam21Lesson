@@ -13,7 +13,6 @@ protocol DataManageable {
     func getLastExample() -> Model
     func getFirstExample() -> Model
     func findExample(elementValue: String) -> Model?
-    func getTextContent() -> Text 
     
 }
 
@@ -22,22 +21,16 @@ final class DataManager: DataManageable {
     //MARK: - Private Property
     
     private var models: [Model] = []
-    private var textContent: Text
     private var currentIndex = 0
     private var currentValue = ""
     
     
-    init(model: [Model], text: Text) {
+    init(model: [Model]) {
         self.models = model
-        self.textContent = text
     }
     
     
     //MARK: - Methods
-    
-    func getTextContent() -> Text {
-        return textContent
-    }
     
     func getCurrentExample() -> Model {
         models[currentIndex]
