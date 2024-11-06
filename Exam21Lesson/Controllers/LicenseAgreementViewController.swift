@@ -11,7 +11,7 @@ class LicenseAgreementViewController: UIViewController {
     
     //MARK: - Private Property
     
-    private var dataManager: DataManageable?
+    private var textManager: TextManager?
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let label = UILabel()
@@ -20,8 +20,8 @@ class LicenseAgreementViewController: UIViewController {
     
     //MARK: - Init
     
-    init(dataManager: DataManager) {
-        self.dataManager = dataManager
+    init(textManager: TextManager) {
+        self.textManager = textManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -74,7 +74,7 @@ private extension LicenseAgreementViewController {
     }
     
     func setupLabel() {
-        let textContent = dataManager?.getTextContent()
+        let textContent = textManager?.getTextContent()
         label.text = textContent?.text
         label.textColor = .black
         label.numberOfLines = 0
