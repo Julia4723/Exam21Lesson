@@ -10,12 +10,12 @@ import UIKit
 
 class ImageListViewController: UIViewController {
     
+    //MARK: - Private Methods
+    
     private var dataManager: DataManageable?
     
     private let tableView = UITableView()
     private let cellIdentifier = "cell"
-    
-    //private let isMark: Bool = false
     
     //MARK: - Init
     
@@ -28,14 +28,17 @@ class ImageListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    //MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupLayout()
-        
     }
 }
 
+//MARK: - UITableViewDataSource
 
 extension ImageListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -52,11 +55,11 @@ extension ImageListViewController: UITableViewDataSource {
         configuration.text = element?.imageName
         configuration.secondaryText = element?.description
         
-//        if let imageName = element?.imageName, !imageName.isEmpty {
-//            configuration.image = UIImage(named: imageName)
-//        } else {
-//            configuration.image = UIImage(named: "placeholder")
-//        }
+        //        if let imageName = element?.imageName, !imageName.isEmpty {
+        //            configuration.image = UIImage(named: imageName)
+        //        } else {
+        //            configuration.image = UIImage(named: "placeholder")
+        //        }
         
         cell.contentConfiguration = configuration
         
@@ -123,6 +126,7 @@ extension ImageListViewController {
 
 
 //MARK: - Layout
+
 extension ImageListViewController {
     func setupLayout() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
