@@ -10,6 +10,7 @@ import UIKit
 struct Model {
     let imageName: String
     let description: String
+    var isMark: Bool = false
     
 }
 
