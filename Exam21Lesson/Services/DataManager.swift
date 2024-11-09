@@ -13,6 +13,9 @@ protocol DataManageable {
     func getLastExample() -> Model
     func getFirstExample() -> Model
     func findExample(elementValue: String) -> Model?
+    func getAllElements() -> [Model]
+    func removeElements(index: Int)
+    func getMark(index: Int)
     
 }
 
@@ -31,6 +34,11 @@ final class DataManager: DataManageable {
     
     
     //MARK: - Methods
+    
+    func getAllElements() -> [Model] {
+        models
+    }
+    
     
     func getCurrentExample() -> Model {
         models[currentIndex]
@@ -67,5 +75,14 @@ final class DataManager: DataManageable {
             }
         }
         return nil
+    }
+    
+    
+    func removeElements(index: Int) {
+        models.remove(at: index)
+    }
+    
+    func getMark(index: Int) {
+        models[index].isMark.toggle()
     }
 }

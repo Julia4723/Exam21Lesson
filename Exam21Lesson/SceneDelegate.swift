@@ -14,27 +14,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        let content = ContentManager().getContent()
         let textManager = TextManager()
         
-        let sortedElement = content.sorted(by: <)
+       // let sortedElement = content.sorted(by: <)
         
-        printElements(elements: sortedElement)
-        
-        let dataManager = DataManager(model: content)
+        //printElements(elements: sortedElement)
         
         //let findVC = FindImageViewController(dataManager: dataManager)
        
-        let licenseAgreementVC = LicenseAgreementViewController(textManager: textManager)
-
+        //let licenseAgreementVC = LicenseAgreementViewController(textManager: textManager)
         
        // let panVC = PanImageViewController(dataManager: dataManager)
         
        // let viewController = ViewController(dataManager: dataManager)
         
+       
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = licenseAgreementVC
+        let imageListVC = buildDataManager()
+        window?.rootViewController = imageListVC
         window?.makeKeyAndVisible()
     }
     
@@ -70,4 +68,13 @@ extension SceneDelegate {
         }
     }
     
+}
+
+extension SceneDelegate {
+    func buildDataManager() -> UIViewController {
+        let content = ContentManager().getContent()
+        let dataManager = DataManager(model: content)
+        let imageListVC = ImageListViewController(dataManager: dataManager)
+        return imageListVC
+    }
 }
