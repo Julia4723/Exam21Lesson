@@ -109,7 +109,7 @@ extension ImageListViewController: UITableViewDelegate {
 
 //MARK: - Setup view
 
-extension ImageListViewController {
+private extension ImageListViewController {
     func setupView() {
         view.backgroundColor = .white
         view.addSubview(tableView)
@@ -127,7 +127,7 @@ extension ImageListViewController {
 
 //MARK: - Layout
 
-extension ImageListViewController {
+private extension ImageListViewController {
     func setupLayout() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
