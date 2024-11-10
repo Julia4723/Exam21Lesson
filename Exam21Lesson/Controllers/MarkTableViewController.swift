@@ -16,7 +16,7 @@ class MarkTableViewController: UITableViewController {
     
     //MARK: - Init
     
-    init(dataManager: DataManager) {
+    init(dataManager: DataManageable) {
         self.dataManager = dataManager
         super.init(nibName: nil, bundle: nil)
     }
@@ -49,7 +49,6 @@ class MarkTableViewController: UITableViewController {
         if let item = dataManager?.getIsFavorite()[indexPath.row] {
             cell.configure(item: item)
         }
-        
         return cell
     }
     

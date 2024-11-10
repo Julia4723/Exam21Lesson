@@ -7,57 +7,27 @@
 
 import UIKit
 
+enum TypeController {
+    case ViewController
+    case FindImage
+    case PanImage
+    case License
+    case ImageList
+    case MarkTable
+}
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
         
-    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
-        let textManager = TextManager()
-        
-       // let sortedElement = content.sorted(by: <)
-        
-        //printElements(elements: sortedElement)
-        
-        //let findVC = FindImageViewController(dataManager: dataManager)
-       
-        //let licenseAgreementVC = LicenseAgreementViewController(textManager: textManager)
-        
-       // let panVC = PanImageViewController(dataManager: dataManager)
-        
-       // let viewController = ViewController(dataManager: dataManager)
-        
        
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let imageListVC = buildDataManager()
+        let imageListVC = assembly(type: .MarkTable)
         window?.rootViewController = imageListVC
         window?.makeKeyAndVisible()
     }
-    
-  
-    func sceneDidDisconnect(_ scene: UIScene) {
-        
-    }
-    
-    func sceneDidBecomeActive(_ scene: UIScene) {
-        
-    }
-    
-    func sceneWillResignActive(_ scene: UIScene) {
-       
-    }
-    
-    func sceneWillEnterForeground(_ scene: UIScene) {
-        
-    }
-    
-    func sceneDidEnterBackground(_ scene: UIScene) {
-       
-    }
-    
-    
 }
 
 
@@ -67,15 +37,36 @@ extension SceneDelegate {
             print(element.descriptionElement)
         }
     }
-    
 }
 
+
 extension SceneDelegate {
-    func buildDataManager() -> UIViewController {
+    
+    //Здесь возвращаем тип протокола менеджера DataManager
+    func buildDataManager() -> DataManageable {
         let content = ContentManager().getContent()
-        let dataManager = DataManager(model: content)
-        let markTableVC = MarkTableViewController(dataManager: dataManager)
-        let imageListVC = ImageListViewController(dataManager: dataManager)
-        return markTableVC
+        let typeDataManagerProtocol = DataManager(model: content)
+        return typeDataManagerProtocol
+    }
+    
+    //Здесь возвращаем вью контроллер
+    func assembly(type: TypeController) -> UIViewController {
+        let typeDataManagerProtocol = buildDataManager()
+        let textManager = TextManager()
+        
+        switch type {
+        case .FindImage:
+            return FindImageViewController(dataManager: typeDataManagerProtocol)
+        case .PanImage:
+            return PanImageViewController(dataManager: typeDataManagerProtocol)
+        case .License:
+            return LicenseAgreementViewController(textManager: textManager)
+        case .ImageList:
+            return ImageListViewController(dataManager: typeDataManagerProtocol)
+        case .ViewController:
+            return ViewController(dataManager: typeDataManagerProtocol)
+        case .MarkTable:
+            return MarkTableViewController(dataManager: typeDataManagerProtocol)
+        }
     }
 }
