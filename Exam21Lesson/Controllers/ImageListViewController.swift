@@ -19,7 +19,7 @@ class ImageListViewController: UIViewController {
     
     //MARK: - Init
     
-    init(dataManager: DataManager) {
+    init(dataManager: DataManageable) {
         self.dataManager = dataManager
         super.init(nibName: nil, bundle: nil)
     }
@@ -54,17 +54,10 @@ extension ImageListViewController: UITableViewDataSource {
         
         configuration.text = element?.imageName
         configuration.secondaryText = element?.description
-       
-        
-        //configuration.image = UIImage(named: element?.imageName ?? "")
-        
-//        if let imageName = UIImage(named: element?.imageName ?? "") {
-//            configuration.image = UIImage(named: element?.imageName ?? "")
-//        } else {
-//            configuration.image = UIImage(named: "placeholder")
-//        }
-//        
-       
+    
+        configuration.image = UIImage(named: element?.imageName ?? "")
+        configuration.imageProperties.maximumSize = CGSize(width: 60, height: 60)
+          
         cell.contentConfiguration = configuration
         
         return cell

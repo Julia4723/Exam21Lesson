@@ -28,7 +28,7 @@ final class FindImageViewController: UIViewController {
     
     //MARK: - Init
     
-    init(dataManager: DataManager) {
+    init(dataManager: DataManageable) {
         self.dataManager = dataManager
         super.init(nibName: nil, bundle: nil)
     }
