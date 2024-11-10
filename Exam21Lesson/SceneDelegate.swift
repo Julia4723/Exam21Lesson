@@ -74,7 +74,8 @@ extension SceneDelegate {
     func buildDataManager() -> UIViewController {
         let content = ContentManager().getContent()
         let dataManager = DataManager(model: content)
+        let markTableVC = MarkTableViewController(dataManager: dataManager)
         let imageListVC = ImageListViewController(dataManager: dataManager)
-        return imageListVC
+        return markTableVC
     }
 }

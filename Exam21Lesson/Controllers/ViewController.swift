@@ -117,7 +117,6 @@ final class ViewController: UIViewController {
         text.text = content?.description
         imageView.image = UIImage(named: content?.imageName ?? "")
     }
-    
 }
 
 
