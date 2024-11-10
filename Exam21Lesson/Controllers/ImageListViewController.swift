@@ -54,15 +54,17 @@ extension ImageListViewController: UITableViewDataSource {
         
         configuration.text = element?.imageName
         configuration.secondaryText = element?.description
+       
         
-        //        if let imageName = element?.imageName, !imageName.isEmpty {
-        //            configuration.image = UIImage(named: imageName)
-        //        } else {
-        //            configuration.image = UIImage(named: "placeholder")
-        //        }
+        //configuration.image = UIImage(named: element?.imageName ?? "")
         
-        cell.contentConfiguration = configuration
-        
+//        if let imageName = UIImage(named: element?.imageName ?? "") {
+//            configuration.image = UIImage(named: element?.imageName ?? "")
+//        } else {
+//            configuration.image = UIImage(named: "placeholder")
+//        }
+//        
+       
         cell.contentConfiguration = configuration
         
         return cell
@@ -87,7 +89,7 @@ extension ImageListViewController: UITableViewDelegate {
         
         let markAction = UIContextualAction(style: .normal, title: "Mark") { action, _, completion in
             
-            self.dataManager?.getMark(index: indexPath.row)
+            self.dataManager?.checkedCell(index: indexPath.row)
             
             let cell = tableView.cellForRow(at: indexPath)
             

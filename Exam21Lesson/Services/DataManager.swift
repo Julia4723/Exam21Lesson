@@ -15,7 +15,8 @@ protocol DataManageable {
     func findExample(elementValue: String) -> Model?
     func getAllElements() -> [Model]
     func removeElements(index: Int)
-    func getMark(index: Int)
+    func checkedCell(index: Int)
+    func getIsFavorite() -> [Model]
     
 }
 
@@ -82,7 +83,19 @@ final class DataManager: DataManageable {
         models.remove(at: index)
     }
     
-    func getMark(index: Int) {
+    
+    func checkedCell(index: Int) {
         models[index].isMark.toggle()
+    }
+    
+    func getIsFavorite() -> [Model]{
+        var isFavorite = [Model]()
+        for item in models {
+            if item.isMark {
+                isFavorite.append(item)
+            }
+        }
+        
+        return isFavorite
     }
 }
