@@ -43,6 +43,17 @@ class CustomCell: UITableViewCell {
     
         checkMarkButton.setImage(UIImage(systemName: checkImage), for: .normal)//передаем название в кнопку
     }
+    
+    @objc func favoriteButtonTapped() {
+        isCheck.toggle()//переключаем значение
+        
+        let checkImage = isCheck ? "checkmark.square.fill" : "checkmark.square"//определяем название картинки
+        
+        checkMarkButton.setImage(UIImage(systemName: checkImage), for: .normal)//передаем название в кнопку
+        
+        actionButton?()
+    }
+    
 }
 
 
@@ -64,6 +75,7 @@ private extension CustomCell {
     }
 }
 
+
 // MARK: - Settings Views
 private extension CustomCell {
     func setupTitleLabel() {
@@ -82,21 +94,11 @@ private extension CustomCell {
         image.contentMode = .scaleAspectFill
     }
     
-    @objc func favoriteButtonTapped() {
-        isCheck.toggle()//переключаем значение
-        
-        let checkImage = isCheck ? "checkmark.square.fill" : "checkmark.square"//определяем название картинки
-        
-        checkMarkButton.setImage(UIImage(systemName: checkImage), for: .normal)//передаем название в кнопку
-        
-        actionButton?()
-    }
-    
+   
     func setupCheckMark() {
         checkMarkButton.tintColor = .systemBlue
         
         checkMarkButton.addTarget(self, action: #selector(favoriteButtonTapped), for: .touchUpInside)
-        
     }
 }
 
