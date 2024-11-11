@@ -13,7 +13,13 @@ class CustomCell: UITableViewCell {
     private let descriptionLabel = UILabel()
     
     private let image = UIImageView()
-    private let checkMark = UIButton()
+    private let checkMarkButton = UIButton()
+    private var isCheck = false
+    
+    
+    @objc var actionButton: (() -> ())?
+    
+    
     
     //MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -31,10 +37,12 @@ class CustomCell: UITableViewCell {
         titleLabel.text = item.imageName
         descriptionLabel.text = item.description
         image.image = UIImage(named: item.imageName)
-        let checkImage = item.isMark ? "checkmark.square.fill" : "checkmark.square"
-        checkMark.setImage(UIImage(systemName: checkImage), for: .normal)
-    }
+        isCheck = item.isMark //передаем значение Bool
+        
+        let checkImage = isCheck ? "checkmark.square.fill" : "checkmark.square" //задаем название картинки
     
+        checkMarkButton.setImage(UIImage(systemName: checkImage), for: .normal)//передаем название в кнопку
+    }
 }
 
 
@@ -50,7 +58,7 @@ private extension CustomCell {
     }
     
     func addSubviews() {
-        [titleLabel, descriptionLabel, image, checkMark].forEach { view in
+        [titleLabel, descriptionLabel, image, checkMarkButton].forEach { view in
             contentView.addSubview(view)
         }
     }
@@ -74,8 +82,21 @@ private extension CustomCell {
         image.contentMode = .scaleAspectFill
     }
     
+    @objc func favoriteButtonTapped() {
+        isCheck.toggle()//переключаем значение
+        
+        let checkImage = isCheck ? "checkmark.square.fill" : "checkmark.square"//определяем название картинки
+        
+        checkMarkButton.setImage(UIImage(systemName: checkImage), for: .normal)//передаем название в кнопку
+        
+        actionButton?()
+    }
+    
     func setupCheckMark() {
-        checkMark.tintColor = .systemBlue
+        checkMarkButton.tintColor = .systemBlue
+        
+        checkMarkButton.addTarget(self, action: #selector(favoriteButtonTapped), for: .touchUpInside)
+        
     }
 }
 
@@ -83,7 +104,7 @@ private extension CustomCell {
 // MARK: - Layout
 private extension CustomCell {
     func setupLayout() {
-        [titleLabel, descriptionLabel, image, checkMark].forEach { view in
+        [titleLabel, descriptionLabel, image, checkMarkButton].forEach { view in
             view.translatesAutoresizingMaskIntoConstraints = false
         }
         
@@ -93,16 +114,16 @@ private extension CustomCell {
             
             titleLabel.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 16),
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: checkMark.leadingAnchor, constant: -8),
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: checkMarkButton.leadingAnchor, constant: -8),
             
             descriptionLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
-            checkMark.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            checkMark.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
-            checkMark.widthAnchor.constraint(equalToConstant: 24),
-            checkMark.heightAnchor.constraint(equalToConstant: 24),
+            checkMarkButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            checkMarkButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            checkMarkButton.widthAnchor.constraint(equalToConstant: 24),
+            checkMarkButton.heightAnchor.constraint(equalToConstant: 24),
         ])
     }
 }
