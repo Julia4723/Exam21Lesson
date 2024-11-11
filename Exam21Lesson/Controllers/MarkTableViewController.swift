@@ -48,6 +48,10 @@ class MarkTableViewController: UITableViewController {
         
         if let item = dataManager?.getIsFavorite()[indexPath.row] {
             cell.configure(item: item)
+            cell.actionButton = {
+                self.dataManager.toggleFavorite(item)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
         }
         return cell
     }

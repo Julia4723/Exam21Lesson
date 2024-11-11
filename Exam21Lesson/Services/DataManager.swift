@@ -17,6 +17,7 @@ protocol DataManageable {
     func removeElements(index: Int)
     func checkedCell(index: Int)
     func getIsFavorite() -> [Model]
+    func toggleFavorite(_ item: Model)
     
 }
 
@@ -97,5 +98,11 @@ final class DataManager: DataManageable {
         }
         
         return isFavorite
+    }
+    
+    func toggleFavorite(_ item: Model) {
+        if let index = models.firstIndex(of: item) {
+            models[index].isMark.toggle()
+        }
     }
 }
