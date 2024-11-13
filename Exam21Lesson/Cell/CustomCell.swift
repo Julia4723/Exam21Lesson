@@ -44,7 +44,7 @@ class CustomCell: UITableViewCell {
         checkMarkButton.setImage(UIImage(systemName: checkImage), for: .normal)//передаем название в кнопку
     }
     
-    @objc func favoriteButtonTapped() {
+    @objc private func favoriteButtonTapped() {
         isCheck.toggle()//переключаем значение
         
         let checkImage = isCheck ? "checkmark.square.fill" : "checkmark.square"//определяем название картинки
@@ -53,7 +53,6 @@ class CustomCell: UITableViewCell {
         
         actionButton?(self)
     }
-    
 }
 
 
