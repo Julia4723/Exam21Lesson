@@ -89,7 +89,7 @@ final class DataManager: DataManageable {
         models[index].isMark.toggle()
     }
     
-    func getIsFavorite() -> [Model]{
+    func getIsFavorite() -> [Model] {
         var isFavorite = [Model]()
         for item in models {
             if item.isMark {
