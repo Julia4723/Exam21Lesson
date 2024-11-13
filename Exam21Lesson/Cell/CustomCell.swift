@@ -16,8 +16,8 @@ class CustomCell: UITableViewCell {
     private let checkMarkButton = UIButton()
     private var isCheck = false
     
-    
-    @objc var actionButton: (() -> ())?
+    ///Так как нам нужен индекс самой ячейки, то в блок замыкания необходимо передать UITableViewCell
+    var actionButton: ((UITableViewCell) -> ())?
     
     
     
@@ -51,7 +51,7 @@ class CustomCell: UITableViewCell {
         
         checkMarkButton.setImage(UIImage(systemName: checkImage), for: .normal)//передаем название в кнопку
         
-        actionButton?()
+        actionButton?(self)
     }
     
 }
