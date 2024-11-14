@@ -13,7 +13,6 @@ class MarkTableViewController: UITableViewController {
     private var dataManager: DataManageable!
     private let cellIdentifier = "cell"
     
-    
     //MARK: - Init
     
     init(dataManager: DataManageable) {
@@ -26,17 +25,16 @@ class MarkTableViewController: UITableViewController {
     }
     
     
-    
     //MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(CustomCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .background
         
-        tableView.separatorColor = .clear
-
+        tableView.register(CustomCell.self, forCellReuseIdentifier: cellIdentifier)
     }
-  
+    
     
     //MARK: - UITableViewDelegate, UITableViewDataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -46,23 +44,19 @@ class MarkTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CustomCell else { return UITableViewCell()}
         
-        if let item = dataManager?.getIsFavorite()[indexPath.row] {
-            cell.configure(item: item)
-            cell.actionButton = { tableViewCell in
-                self.dataManager.checkedCell(index: indexPath.row)
-
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+        let item = dataManager.getIsFavorite()[indexPath.row]
+        
+        cell.action = { myCell in
+            if let index = tableView.indexPath(for: myCell) {
+                let item = self.dataManager.getIsFavorite()[index.row]
+                self.dataManager.toggleFavorite(item)
+                self.tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         }
+        cell.selectionStyle = .none
+        cell.configure(item: item)
+        
         return cell
     }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        120
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-
 }
+
